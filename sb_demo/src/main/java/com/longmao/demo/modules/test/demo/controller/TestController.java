@@ -19,7 +19,7 @@ public class TestController {
 	
 private final static Logger LOGGER=LoggerFactory.getLogger(TestController.class);
 	
-	@RequestMapping("test")
+	@RequestMapping("test1")
 	@ResponseBody
 	public String testDemo() {
 		StringBuffer sBuffer=new StringBuffer();

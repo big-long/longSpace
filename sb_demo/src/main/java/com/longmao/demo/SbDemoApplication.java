@@ -11,6 +11,7 @@ public class SbDemoApplication {
 		SpringApplication springApplication=new SpringApplication(SbDemoApplication.class);
 		springApplication.setBannerMode(Banner.Mode.OFF);
 		SpringApplication.run(SbDemoApplication.class, args);
+		
 	}
 
 }

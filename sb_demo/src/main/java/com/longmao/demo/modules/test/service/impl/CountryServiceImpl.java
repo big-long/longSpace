@@ -22,4 +22,10 @@ private CountryDao countryDao;
 		return countryDao.selectCountryByCountryName(countryName);
 	}
 
+	@Override
+	public Country insertCountryByCountry(Country country) {
+		 countryDao.insertCountryByCountry(country);
+		 return country;
+	}
+
 }

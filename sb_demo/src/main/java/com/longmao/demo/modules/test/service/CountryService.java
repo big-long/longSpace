@@ -8,4 +8,6 @@ public interface CountryService {
 
 	Country selectCountryByCountryName(String countryName);
 
+	Country insertCountryByCountry(Country country);
+
 }

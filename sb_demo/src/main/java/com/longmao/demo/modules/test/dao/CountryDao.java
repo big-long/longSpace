@@ -2,8 +2,10 @@ package com.longmao.demo.modules.test.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Many;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Results;
@@ -25,13 +27,11 @@ public interface CountryDao {
 	 * @author zdl
 	 * @Date 2019年11月27日
 	 * @param int countryId
-	 * @return Country
-	 * 通过@results注解将一个ID映射到不同的实体上，@many中引用的是已有方法，全类名.方法名调用
+	 * @return Country 通过@results注解将一个ID映射到不同的实体上，@many中引用的是已有方法，全类名.方法名调用
 	 */
 	@Select("select * from m_country where country_id=#{countryId}")
 	@Results(id = "countryResult", value = { @Result(column = "country_id", property = "countryId"),
-			@Result(column = "country_id", property = "cities", javaType = List.class, 
-			many = @Many(select = "com.longmao.demo.modules.test.dao.CityDao.selevtCitiesByCountryId")) })
+			@Result(column = "country_id", property = "cities", javaType = List.class, many = @Many(select = "com.longmao.demo.modules.test.dao.CityDao.selevtCitiesByCountryId")) })
 	Country selectCountryByCountryId(int countryId);
 
 	/**
@@ -49,5 +49,9 @@ public interface CountryDao {
 	@Select("select * from m_country where country_name=#{countryName}")
 	@ResultMap(value = "countryResult")
 	Country selectCountryByCountryName(String countryName);
+
+	@Insert("insert into m_country (country_name,local_country_name,country_code) values (#{countryName},#{localCountryName},#{countryCode})")
+	@Options(useGeneratedKeys=true,keyColumn="country_id",keyProperty="countryId")
+	void insertCountryByCountry(Country country);
 
 }

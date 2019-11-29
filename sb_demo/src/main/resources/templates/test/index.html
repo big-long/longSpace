@@ -1,4 +1,8 @@
 <section th:fragment="">
-this is test page.
-<hr/>
+	<form action="https://127.0.0.1:8044/test/upload" method="post" enctype="multipart/form-data">
+		<p th:text="${message}"></p>
+		<input type="file" name="file"> <input type="submit" value="submit">
+	</form>
+	<a href="https://127.0.0.1:8044/test/download?fileName=打字关卡.txt">下载文件</a>
+	<hr />
 </section>

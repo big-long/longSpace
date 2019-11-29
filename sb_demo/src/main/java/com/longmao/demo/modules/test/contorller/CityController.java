@@ -2,7 +2,8 @@ package com.longmao.demo.modules.test.contorller;
 
 import java.util.List;
 
-import org.hibernate.validator.constraints.ParameterScriptAssert;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageInfo;
@@ -25,11 +27,8 @@ public class CityController {
 
 	@Autowired
 	private CityService cityService;
-	@RequestMapping("page")
-	public String pageTest(ModelMap modelMap) {
-		modelMap.addAttribute("template", "test/index");
-		return "index";
-	}
+
+
 
 	/**
 	 * 

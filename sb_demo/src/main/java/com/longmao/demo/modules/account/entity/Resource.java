@@ -2,11 +2,17 @@ package com.longmao.demo.modules.account.entity;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class Resource {
 	private int resourceId;
 	private String resourceUrl;
 	private String resourceName;
 	private String permission;
+	@JsonFormat(pattern = "yyyy‐MM‐dd HH:mm:ss", timezone = "GMT+8")
+	@DateTimeFormat(pattern = "yyyy‐MM‐dd HH:mm:ss")
 	private Date createDate;
 	public Resource(int resourceId, String resourceUrl, String resourceName, String permission, Date createDate) {
 		super();

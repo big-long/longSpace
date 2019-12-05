@@ -1,9 +1,10 @@
 package com.longmao.demo.modules.test.demo.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,6 +37,23 @@ public class TestController {
 	private int port;
 	@Autowired
 	private ApplicationTestBean an;
+	
+//	@RequestMapping("downloadIo")
+//	@ResponseBody
+//	public void downloadIo(@RequestParam String fileName) {
+//		String path="f:/upload/"+fileName;
+//		try {
+//			FileInputStream in=new FileInputStream(path);
+//			in.read();
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//	}
 
 	@RequestMapping("download")
 	@ResponseBody
@@ -48,8 +66,7 @@ public class TestController {
 						.body(resource);
 			}
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.debug(e.getMessage());
 		}
 		return null;
 	}

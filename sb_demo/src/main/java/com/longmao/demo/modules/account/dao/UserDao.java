@@ -23,7 +23,7 @@ public interface UserDao {
 	void updateUserByUser(User user);
 
 	@Delete("delete from m_user where user_id=#{userId}")
-	void deleteUserByUserId(int userId);
+	int deleteUserByUserId(int userId);
 
 	@Select("select * from m_user where user_id=#{userId}")
 	User selectUserByUserId(int userId);
@@ -36,4 +36,10 @@ public interface UserDao {
 
 	@Select("select * from m_user where user_name=#{userName}")
 	List<User> selectUsersByUsername(String username);
+
+	@Select("select * from m_user where user_name=#{userName}")
+	User selectUserByUserName(String userName);
+
+	@Select("select * from m_user where user_name=#{userName} and password=#{password}")
+	User selectUserByUserNameAndPassword(String userName, String password);
 }

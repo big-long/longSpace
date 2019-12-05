@@ -11,7 +11,7 @@ import com.longmao.demo.modules.account.entity.UserRole;
 @Mapper
 public interface UserRoleDao {
 	@Insert("insert into m_user_role values(null, #{userId}, #{roleId})")
-	void insertUserRoleByUserRole(UserRole userRole);
+	int insertUserRoleByUserRole(UserRole userRole);
 	
 	@Delete("delete from m_user_role where user_id=#{userId}")
 	void deleteUserRoleByUserId(int userId);

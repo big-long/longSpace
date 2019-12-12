@@ -62,5 +62,10 @@ public class ResourceServiceImpl implements ResourceService {
 	public Resource selectResourceByResourceId(Integer resourceId) {
 		return resourceDao.selectResourceByResourceId(resourceId);
 	}
+//	
+//	@Override
+//	public  Resource selectResourceByResource(Resource resource) {
+//		return resourceDao.selectResourceByResource(resource);
+//	}
 
 }

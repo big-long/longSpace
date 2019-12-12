@@ -34,4 +34,7 @@ public interface CityDao {
 
 	@Delete("delete from m_city where city_id=#{cityId}")
 	int deleteCity(int cityId);
+	
+	@Select("select * from m_city where city_id not in(1) limit 10")
+	List<City> selectCitys();
 }

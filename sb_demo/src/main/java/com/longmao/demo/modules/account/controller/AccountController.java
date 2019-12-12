@@ -55,6 +55,12 @@ public class AccountController {
 	private RoleResourceService roleResourceService;
 	@Autowired
 	private ResourceService resourceService;
+	@RequestMapping("/deleteManyUsers")
+	@ResponseBody
+	public Result deleteManyUsers(String[] userIdArr) {
+		userService.deleteManyUsers(userIdArr);
+		return new Result(200,"success");
+	}
 	
 	@RequestMapping("/loadResource")
 	@PermissionName("加载权限")
@@ -184,6 +190,7 @@ public class AccountController {
 			usernamePasswordToken.setRememberMe(rememberMe);
 			subject.login(usernamePasswordToken);
 			subject.checkRoles();
+			session.setAttribute("USER", user);
 		} catch (IncorrectCredentialsException e) {
 			result = new Result(500, "The password do not right");
 		} catch (AuthenticationException e) {
@@ -286,11 +293,11 @@ public class AccountController {
 	 * @param modelMap
 	 * @return
 	 */
-	@RequestMapping("/users/{currentPage}/{pageSize}")
+	@RequestMapping("/users")
 	@RequiresRoles(value = { "admin", "manager" }, logical = Logical.OR)
 	@RequiresPermissions("userList")
 	@PermissionName("用户列表")
-	public String userListByPage(@PathVariable int currentPage, @PathVariable int pageSize, ModelMap modelMap) {
+	public String userListByPage(@RequestParam(defaultValue="1") int currentPage, @RequestParam(defaultValue="10") int pageSize, ModelMap modelMap) {
 		PageInfo<User> pageUsers = userService.selectUsersByPage(currentPage, pageSize);
 		List<Role> roles = roleService.selectRoles();
 		modelMap.addAttribute("roles", roles);

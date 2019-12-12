@@ -1,5 +1,6 @@
 package com.longmao.demo.modules.test.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.github.pagehelper.PageInfo;
@@ -16,4 +17,6 @@ public interface CityService {
 	City updateCity(City city);
 
 	boolean deleteCity(int cityId);
+
+	HashMap<String, List> getMap();
 }

@@ -1,0 +1,35 @@
+<section>
+	<button>柱状图</button>
+	<div id="main" style="width: 500px; height: 600px"></div>
+	<script type="text/javascript">
+		$(function() {
+			$("button").bind("click", function() {
+				var map = echarts.init($("#main"))
+				$.ajax({
+					url : "/test/getData",
+					success : function(data) {
+						var option = {
+							title : {
+								text : '城市人口数对比图'
+							},
+							tooltip : {},
+							legend : {
+								data : [ '人口数' ]
+							},
+							xAxis : {
+								data : data.x
+							},
+							yAxis : {},
+							series : [ {
+								name : '人口数',
+								type : 'bar',
+								data : data.y
+							} ]
+						};
+						map.setOption(option);
+					}
+				})
+			})
+		})
+	</script>
+</section>

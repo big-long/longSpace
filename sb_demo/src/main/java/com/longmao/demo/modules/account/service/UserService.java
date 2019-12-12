@@ -24,6 +24,8 @@ public interface UserService {
 
 	boolean selectUserByuserNameAndPassword(User user);
 
+	void deleteManyUsers(String[] userIdArr);
+
 	
 
 

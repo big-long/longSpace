@@ -32,6 +32,7 @@
 						<table class="table table-bordered table-hover table-striped">
 							<thead>
 								<tr>
+									<th style="width:10px"><input type="checkbox" name="checkAll"></th>
 									<th>用户id</th>
 									<th>用户账号</th>
 									<th>创建日期</th>
@@ -40,6 +41,7 @@
 							</thead>
 							<tbody>
 								<tr th:each="user : ${pageUsers.list}" name="userTr">
+									<td><input type="checkbox" name="checkbox" /></td>
 									<td name="userId" th:text="${user.userId}"></td>
 									<td name="userName" th:text="${user.userName}"></td>
 									<td
@@ -51,7 +53,8 @@
 						</table>
 						<div style="text-align: left;">
 							<div class="pagelist " style="text-align: center; width: 70%">
-								<a class="btn-info  btn"
+							<a class="btn-danger btn" href="#" id="deleteChecked">批量删除</a>
+								<!-- <a class="btn-info  btn"
 									th:href="@{'/account/users/1/'+${pageUsers.pageSize}}">首页</a> <label
 									th:if="${pageUsers.hasPreviousPage}"> <a
 									class="btn-info btn"
@@ -63,12 +66,12 @@
 										th:text="${page}"></a></span>
 								</label>
 
-								<!-- <a href="">2</a><a href="">3</a> -->
+								<a href="">2</a><a href="">3</a>
 								<label th:if="${pageUsers.hasNextPage}"><a
 									class="btn-info btn"
 									th:href="@{'/account/users/'+${pageUsers.nextPage}+'/'+${pageUsers.pageSize}}">下一页</a>
 								</label> <a class="btn-info  btn"
-									th:href="@{'/account/users/'+${pageUsers.pages}+'/'+${pageUsers.pageSize}}">尾页</a>
+									th:href="@{'/account/users/'+${pageUsers.pages}+'/'+${pageUsers.pageSize}}">尾页</a> -->
 							</div>
 
 						</div>

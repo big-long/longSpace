@@ -1,4 +1,51 @@
 $(function() {
+	//批量删除
+	$("#deleteChecked").bind("click",function(){
+		if (confirm("您确定要删除吗?")) {
+			var userIdArr=new Array();
+			$("[name=checkbox]").each(function(){
+				if(this.checked){
+					var userId=$(this).parent().next().text();
+					userIdArr.push(userId);
+					
+				}
+			});
+			$.ajax({
+				url:"/account/deleteManyUsers",
+				type:"get",
+				data:{
+					userIdArr:userIdArr
+				},
+				traditional : true,
+				success:function(result){
+					console.debug(result.status)
+					if(result.status==200){
+						$("[name=checkbox]").each(function(){
+							if($(this).prop('checked')){
+								$(this).parents("tr").remove()
+							}
+						})
+					}
+				},
+				error:function(result){
+					console.debug("wwww")
+				}
+			})
+		}
+	})
+	// 多选
+	$("[name=checkAll]").bind("click", function() {
+		var flag = $(this).prop('checked');
+		if(flag){
+			$("[name=checkbox]").each(function(){
+				this.checked=true;
+			});
+		}else{
+			$("[name=checkbox]").each(function(){
+				this.checked=false;
+			});
+		}
+	});
 	// 加载资源
 	$("#loadResource").bind("click", function() {
 		$.ajax({
@@ -12,7 +59,7 @@ $(function() {
 				}
 			}
 		})
-	})
+	});
 	// 用户注册
 	$("#registerButton").bind("click", function() {
 		var userName = $("[name=userName]").val();

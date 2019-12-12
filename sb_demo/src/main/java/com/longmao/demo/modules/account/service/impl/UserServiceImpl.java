@@ -98,4 +98,12 @@ public class UserServiceImpl implements UserService {
 		return false;
 	}
 
+	@Override
+	public void deleteManyUsers(String[] userIdArr) {
+		for (int i = 0; i < userIdArr.length; i++) {
+		int	userId=Integer.parseInt(userIdArr[i]);
+//		userDao.deleteUserByUserId(userId);
+		}
+	}
+
 }

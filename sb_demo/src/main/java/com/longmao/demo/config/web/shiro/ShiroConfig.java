@@ -41,6 +41,9 @@ public class ShiroConfig {
 
 		Map<String, String> urlFileter = new LinkedHashMap<String, String>();
 		urlFileter.put("/static/**", "anon");
+		urlFileter.put("/test/getData", "anon");
+		urlFileter.put("/test/toPage", "anon");
+		urlFileter.put("/test/getAverage", "anon");
 		urlFileter.put("/js/**", "anon");
 		urlFileter.put("/css/**", "anon");
 		urlFileter.put("/account/login", "anon");
@@ -95,7 +98,7 @@ public class ShiroConfig {
 	public DefaultWebSessionManager sessionManager() {
 		DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
 		sessionManager.setSessionIdUrlRewritingEnabled(false);
-//		sessionManager.setSessionIdCookie(rememberMeCookie());
+		sessionManager.setSessionIdCookie(rememberMeCookie());
 		return sessionManager;
 	}
 

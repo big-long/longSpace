@@ -1,6 +1,8 @@
 package com.longmao.demo.modules.test.service.impl;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -70,6 +72,22 @@ public class CityServiceImpl implements CityService {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public HashMap<String, List> getMap() {
+		HashMap<String, List> map=new HashMap<String, List>();
+		List<City> cities=cityDao.selectCitys();
+		List<String> keyList=new LinkedList<String>();
+		List<Integer> intList=new LinkedList<Integer>();
+		for (int i = 0; i < cities.size(); i++) {
+			keyList.add(cities.get(i).getCityName());
+			intList.add(cities.get(i).getPopulation());
+		}
+		map.put("x", keyList);
+		map.put("y", intList);
+		
+		return map;
 	}
 
 }

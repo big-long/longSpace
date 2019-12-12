@@ -19,9 +19,9 @@ import com.longmao.demo.modules.account.entity.Resource;
 import com.longmao.demo.modules.account.service.ResourceService;
 //
 //@Controller
-//@RequestMapping("/account")
+//@RequestMapping("/res")
 public class RescourceController {
-//s
+
 	@Autowired
 	private ResourceService resourceService;
 
@@ -55,10 +55,10 @@ public class RescourceController {
 		return resourceService.selectResources();
 	}
 
-	@RequestMapping("detailResource")
-	@ResponseBody
-	public Resource detailResource(@RequestParam Integer resourceId) {
-		return resourceService.selectResourceByResourceId(resourceId);
-	}
+//	@RequestMapping("/detailResource")
+//	@ResponseBody
+//	public Resource detailResource(Resource resource) {
+//		return resourceService.selectResourceByResource(resource);
+//	}
 
 }

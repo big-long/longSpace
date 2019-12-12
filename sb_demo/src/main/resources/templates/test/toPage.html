@@ -1,0 +1,218 @@
+<section>
+
+	<div style="text-align: center">
+		<h2>各省市高考分数线分析</h2>
+		<!-- <button>平均分</button> -->
+		<select name="province">
+			<option value="">请选择省份</option>
+			<option value="上海">上海</option>
+			<option value="重庆">重庆</option>
+			<option value="四川">四川</option>
+			<option value="江西">江西</option>
+			<option value="山西">山西</option>
+			<option value="湖南">湖南</option>
+			<option value="湖北">湖北</option>
+		</select> <select name="level">
+			<option value="">请选择等级</option>
+			<option value="一本">一本</option>
+			<option value="二本">二本</option>
+		</select> <select name="discipline">
+			<option value="">请选择学科</option>
+			<option value="理科">理科</option>
+			<option value="文科">文科</option>
+		</select> </select> <select name="num">
+			<option value="1">柱状图</option>
+			<option value="2">折线图</option>
+			<!-- <option value="3">饼图</option> -->
+		</select>
+		<div style="width: 1400px; height: 600px; margin: 0 auto">
+			<div id="avg" style="width: 700px; height: 600px; float: left"></div>
+			<div id="main" style="width: 700px; height: 600px; float: left"></div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var num = 1;
+		$(function() {
+			$("select").bind("change", function() {
+				var province = $("[name=province]").val();
+				var level = $("[name=level]").val();
+				var discipline = $("[name=discipline]").val();
+				var num = $("[name=num]").val();
+				if (province != "" && level != "" && discipline != "") {
+					var map = echarts.init(document.getElementById('main'))
+					var option = {};
+					$.ajax({
+						url : "/test/getData",
+						data : {
+							province : province,
+							level : level,
+							discipline : discipline
+						},
+						success : function(data) {
+							//设置柱形图的相关参数
+							if (num == 2) {
+								option = {
+									title : {
+										text : province,
+										subtext : discipline+"   "+level,
+										left : 'center'
+									},
+									xAxis : {
+										type : 'category',
+										data : data.year
+									},
+									yAxis : {
+										type : 'value'
+									},
+									series : [ {
+										data : data.score,
+										type : 'line',
+										itemStyle: {
+							                 normal: {
+							                     label: {
+							                         show: true,
+							                         position: 'top',
+							                         textStyle: {
+							                             color: '#800080'
+							                         }
+							                     }
+							                 }
+										 }
+									} ]
+								};
+								//设置折线图的相关参数
+							} else if (num == 1) {
+								option = {
+									title : {
+										text : province,
+										subtext : discipline+"   "+level,
+										left : 'center'
+									},
+									color : [ '#3398DB' ],
+									tooltip : {
+										trigger : 'axis',
+										axisPointer : { // 坐标轴指示器，坐标轴触发有效
+											type : 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+										}
+									},
+									grid : {
+										left : '3%',
+										right : '4%',
+										bottom : '3%',
+										containLabel : true
+									},
+									xAxis : [ {
+										type : 'category',
+										name : '年份',
+										data : data.year,
+										axisTick : {
+											alignWithLabel : true
+										}
+									} ],
+									yAxis : [ {
+										name : '分数',
+										type : 'value'
+									} ],
+									series : [ {
+										name : '分数',
+										type : 'bar',
+										barWidth : '60%',
+										data : data.score,
+										 itemStyle: {
+							                 normal: {
+							                     label: {
+							                         show: true,
+							                         position: 'top',
+							                         textStyle: {
+							                             color: '#800080'
+							                         }
+							                     }
+							                 }
+										 }
+									} ]
+								};
+							}
+							map.setOption(option);
+							//调用显示平均数的饼图
+							averg();
+						}
+					})
+				}
+			})
+
+			/* $("button").bind("click",averg()) */
+
+		})
+		//定义显示平均数的饼图的方法
+		function averg() {
+			var map = echarts.init(document.getElementById('avg'))
+			var option = {};
+			var array = new Array();
+			$("[name=province]").children("option").each(function() {
+				if ($(this).val() != "") {
+					array.push($(this).val())
+				}
+			})
+			var level = $("[name=level]").val();
+			var discipline = $("[name=discipline]").val();
+			console.debug(array);
+			if (level != "" && discipline != "") {
+				$.ajax({
+					url : "/test/getAverage",
+					data : {
+						provinces : array,
+						level : level,
+						discipline : discipline
+					},
+					traditional : true,
+					success : function(data) {
+						option = {
+							title : {
+								text : '平均分',
+								subtext : '各省年平均分',
+								left : 'center'
+							},
+							tooltip : {
+								trigger : 'item',
+								formatter : "{a} <br/>{b} : {c} ({d}%)"
+							},
+							legend : {
+								// orient: 'vertical',
+								// top: 'middle',
+								bottom : 10,
+								left : 'center',
+							},
+							series : [ {
+								type : 'pie',
+								radius : '65%',
+								center : [ '50%', '50%' ],
+								selectedMode : 'single',
+								data : data,
+								itemStyle : {
+									emphasis : {
+										shadowBlur : 10,
+										shadowOffsetX : 0,
+										shadowColor : 'rgba(0, 0, 0, 0.5)'
+									},
+									normal : {
+										label : {
+											show : true,
+											formatter : '{b} : {c}分 ({d}%)'
+										},
+										labelLine : {
+											show : true
+										}
+									}
+								}
+							} ]
+						}
+						map.setOption(option);
+					},
+					error : function() {
+						alert("error")
+					}
+				})
+			}
+		}
+	</script>
+</section>

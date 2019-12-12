@@ -21,4 +21,5 @@ public interface ResourceService {
 
 	Resource selectResourceByResourceId(Integer resourceId);
 
+//	Resource selectResourceByResource(Resource resource);
 }
